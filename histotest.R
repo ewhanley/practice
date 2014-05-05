@@ -22,7 +22,7 @@ histotest <- function(userdata, bins = 10) {
                 lowerCheck <- rep(0, bins)
                 upperCheck <- rep(0, bins)
                 lowerCheck[which(binLower <= userdata[i])] <- 1
-                upperCheck[which(binUpper >= userdata[i])] <- 1
+                upperCheck[which(binUpper > userdata[i])] <- 1
                 histoValues <- histoValues + (lowerCheck + upperCheck - 1)
         }
         
