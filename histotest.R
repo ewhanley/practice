@@ -22,9 +22,13 @@ histotest <- function(userdata, bins = 10) {
                 lowerCheck <- rep(0, bins)
                 upperCheck <- rep(0, bins)
                 lowerCheck[which(binLower <= userdata[i])] <- 1
-                upperCheck[which(binUpper >= userdata[i])] <- 1
+                upperCheck[which(binUpper > userdata[i])] <- 1
                 histoValues <- histoValues + (lowerCheck + upperCheck - 1)
         }
+        ## crude method to correct count in last bin.  Bin is off by one due
+        ## to exclusive inequality in upperCheck
+        correction <- c(rep(0, bins - 1), 1)
+        histoValues <- histoValues + correction
         
         ## Output histogram of user input data and bins
         names(histoValues) <- binUpper
