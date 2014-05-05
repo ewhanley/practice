@@ -22,11 +22,16 @@ histotest <- function(userdata, bins = 10) {
                 lowerCheck <- rep(0, bins)
                 upperCheck <- rep(0, bins)
                 lowerCheck[which(binLower <= userdata[i])] <- 1
-                upperCheck[which(binUpper >= userdata[i])] <- 1
+                upperCheck[which(binUpper > userdata[i])] <- 1
                 histoValues <- histoValues + (lowerCheck + upperCheck - 1)
+
         }
+        ## crude method to handle extra count in last bin
+        correction <- c(rep(0, bins - 1), 1)
+        histoValues <- histoValues + correction
         
-        ## Output histogram of user input data and bins
+        
+        ## Output histogram of user input data and bin
         names(histoValues) <- binUpper
         barplot(histoValues, names.arg = signif(as.numeric(names(histoValues)), 3),
                 xlab = "bins (upper bounds)", ylab = "frequency")
